@@ -57,7 +57,7 @@ internal fun View?.onDetach(block: View.() -> Unit) {
 }
 
 internal fun View?.makeBackgroundSelectable() {
-  if (this != null && background == null) {
+  if (this != null && background == null && context != null) {
     background = context.resolveDrawable(attr.selectableItemBackground)
   }
 }

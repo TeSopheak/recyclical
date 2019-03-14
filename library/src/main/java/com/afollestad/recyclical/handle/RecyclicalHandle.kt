@@ -31,12 +31,6 @@ typealias AdapterBlock = Adapter<*>.() -> Unit
  * @author Aidan Follestad (@afollestad)
  */
 interface RecyclicalHandle {
-  /** Shows the empty view. */
-  fun showEmptyView()
-
-  /** Hides the empty view. */
-  fun hideEmptyView()
-
   /** Shows the empty view if [show] is true, else hides it. */
   fun showOrHideEmptyView(show: Boolean)
 

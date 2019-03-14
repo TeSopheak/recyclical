@@ -111,15 +111,15 @@ class RecyclicalSetup internal constructor(
 
     val dataSource = currentDataSource
         ?: throw IllegalStateException("Must set a data source.")
-    val attached = RealRecyclicalHandle(
+    return RealRecyclicalHandle(
         emptyView = emptyView,
         adapter = DefinitionAdapter(),
         itemClassToType = itemClassToType,
         bindingsToTypes = bindingsToTypes,
         dataSource = dataSource
-    )
-    dataSource.attach(attached)
-    return attached
+    ).also {
+      dataSource.attach(it)
+    }
   }
 }
 
@@ -135,14 +135,14 @@ fun RecyclerView.setup(block: RecyclicalSetup.() -> Unit): RecyclicalHandle {
   if (layoutManager == null) {
     layoutManager = LinearLayoutManager(context)
   }
-  val attached = setup.toAttached()
+
+  return setup.toAttached()
       .also {
         adapter = it.getAdapter()
-      }
-  if (attached is RealRecyclicalHandle) {
-    onAttach { attached.attachDataSource() }
-    onDetach { attached.detachDataSource() }
-  }
 
-  return attached
+        if (it is RealRecyclicalHandle) {
+          onAttach { it.attachDataSource() }
+          onDetach { it.detachDataSource() }
+        }
+      }
 }

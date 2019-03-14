@@ -24,20 +24,12 @@ import com.afollestad.recyclical.internal.DefinitionAdapter
 
 /** @author Aidan Follestad (@afollestad) */
 class RealRecyclicalHandle internal constructor(
-  private val emptyView: View?,
+  internal val emptyView: View?,
   private val adapter: DefinitionAdapter,
   private val itemClassToType: MutableMap<String, Int>,
   private val bindingsToTypes: MutableMap<Int, ItemDefinition<*>>,
   val dataSource: DataSource
 ) : RecyclicalHandle {
-
-  override fun showEmptyView() {
-    emptyView?.visibility = View.VISIBLE
-  }
-
-  override fun hideEmptyView() {
-    emptyView?.visibility = View.GONE
-  }
 
   override fun showOrHideEmptyView(show: Boolean) {
     emptyView?.visibility = if (show) View.VISIBLE else View.GONE
@@ -63,7 +55,7 @@ class RealRecyclicalHandle internal constructor(
 
   override fun getDefinitionForType(type: Int): ItemDefinition<*> {
     return bindingsToTypes[type] ?: throw IllegalStateException(
-        "Unable to view item definition for viewType $this"
+        "Unable to view item definition for viewType $type"
     )
   }
 
